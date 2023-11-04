@@ -1,0 +1,36 @@
+version: '3.4'
+
+services:
+  bandeira.api:
+    image: ${DOCKER_REGISTRY-}bandeiraapi
+    container_name: Bandeira.Api
+    build:
+      context: .
+      dockerfile: src/Bandeira.Api/Dockerfile
+    depends_on:
+      - bandeira-db
+
+  bandeira-db:
+    image: postgres:latest
+    container_name: Bandeira.Db
+    environment:
+      - POSTGRES_DB=bandeira
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    volumes:
+      - ./.containers/database:/var/lib/postgresql/data
+    ports:
+      - 5432:5432
+
+  bandeira-idp:
+    image: jboss/keycloak:latest
+    container_name: Bandeira.Identity
+    environment:
+      - KEYCLOAK_USER=admin
+      - KEYCLOAK_PASSWORD=admin
+      - KEYCLOAK_IMPORT=/tmp/bandeira-realm-export.json
+    volumes:
+      - ./.containers/identity:/opt/jboss/keycloak/standalone/data
+      - ./.files/bandeira-realm-export.json:/tmp/bandeira-realm-export.json
+    ports:
+      - 18080:8080
