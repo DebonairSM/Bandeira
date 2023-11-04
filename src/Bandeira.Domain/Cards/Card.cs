@@ -1,7 +1,6 @@
 ﻿using Bandeira.Domain.Abstractions;
 using Bandeira.Domain.Cards.Events;
 using Bandeira.Domain.Persons;
-using Bandeira.Domain.Reviews;
 using Bandeira.Domain.Shared;
 using System.Security.Cryptography;
 
@@ -25,14 +24,14 @@ namespace Bandeira.Domain.Cards
         public Money CardBalance {  get; private set; }
         public Person CardIssuedTo { get; private set; }
 
-        public static Result<Card> Create(Person cardIssuedTo)
+        public static Result<Card> Create(Person cardIssuedTo, CardIssuingService cardIssuingService)
         {
            var newCard = new Card(
                 CardId.New(),
                 GenerateCardNumber(),
                 cardIssuedTo);
             
-            if (newCard.Status != CardStatus.Completed)
+            if (!cardIssuingService.IsAuthorisedByVerficationService(newCard))
             {
                 return Result.Failure<Card>(CardErrors.NotEligible);
             }

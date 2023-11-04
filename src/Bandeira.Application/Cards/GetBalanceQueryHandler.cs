@@ -1,8 +1,6 @@
 ﻿
-using Bandeira.Api.Application.Cards;
 using Bandeira.Application.Abstractions.Data;
 using Bandeira.Application.Abstractions.Messaging;
-using Bandeira.Application.Persons.SearchPersons;
 using Bandeira.Domain.Abstractions;
 using Dapper;
 

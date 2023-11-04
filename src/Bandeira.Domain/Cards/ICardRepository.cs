@@ -6,5 +6,5 @@ public interface ICardRepository
 {
     Task<Card?> GetByIdAsync(CardId id, CancellationToken cancellationToken = default);
 
-    void Add(Card booking);
+    void Add(Card card);
 }

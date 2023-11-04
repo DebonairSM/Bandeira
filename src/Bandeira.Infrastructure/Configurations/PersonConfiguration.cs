@@ -1,4 +1,3 @@
-
 using Bandeira.Domain.Persons;
 using Bandeira.Domain.Shared;
 using Microsoft.EntityFrameworkCore;
@@ -20,20 +19,12 @@ internal sealed class PersonConfiguration : IEntityTypeConfiguration<Person>
         builder.OwnsOne(person => person.Address);
 
         builder.Property(person => person.Name)
-            .HasMaxLength(200)
-            .HasConversion(name => name.Value, value => new Name(value));
+            .HasMaxLength(200);
 
         builder.Property(person => person.Description)
-            .HasMaxLength(2000)
-            .HasConversion(description => description.Value, value => new Description(value));
+            .HasMaxLength(2000);
 
         builder.OwnsOne(person => person.Price, priceBuilder =>
-        {
-            priceBuilder.Property(money => money.Currency)
-                .HasConversion(currency => currency.Code, code => Currency.FromCode(code));
-        });
-
-        builder.OwnsOne(person => person.ServiceFee, priceBuilder =>
         {
             priceBuilder.Property(money => money.Currency)
                 .HasConversion(currency => currency.Code, code => Currency.FromCode(code));

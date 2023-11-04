@@ -9,5 +9,17 @@ namespace Bandeira.Domain.Cards
     public class CardIssuingService
     {
         public CardIssuingService() { }
+
+        internal bool IsAuthorisedByVerficationService(Card newCard)
+        {
+            if (int.TryParse(newCard.CardNumber, out int number))
+            {
+                return number % 2 == 0;
+            }
+            else
+            {
+                throw new ArgumentException("The input is not a valid integer.");
+            }
+        }
     }
 }

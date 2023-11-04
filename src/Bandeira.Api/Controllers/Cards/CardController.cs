@@ -1,11 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MediatR;
-using System.Security.Cryptography;
-using System.Text;
-using Bandeira.Application.Persons.SearchPersons;
-using System.Threading;
-using Bandeira.Api.Application.Cards;
+using Bandeira.Application.Cards;
 
 namespace Bandeira.Api.Controllers.Cards
 {
@@ -33,7 +29,12 @@ namespace Bandeira.Api.Controllers.Cards
                 return Ok(card);
             }
 
-            [HttpPost("pay")]
+        private string GenerateCardNumber()
+        {
+            throw new NotImplementedException();
+        }
+
+        [HttpPost("pay")]
             public ActionResult Pay(string cardNumber, double amount)
             {
                 var card = Cards.FirstOrDefault(c => c.CardNumber == cardNumber);

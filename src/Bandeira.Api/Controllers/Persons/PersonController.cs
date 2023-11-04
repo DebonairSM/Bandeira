@@ -1,4 +1,3 @@
-using Bandeira.Application.Persons.SearchPersons;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -23,10 +22,10 @@ public class PersonsController : ControllerBase
         DateOnly endDate,
         CancellationToken cancellationToken)
     {
-        var query = new SearchPersonsQuery(startDate, endDate);
+        var query = new SearchPersonsQuery();
 
         var result = await _sender.Send(query, cancellationToken);
 
-        return Ok(result.Value);
+        return Ok(result);
     }
 }

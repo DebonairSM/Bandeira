@@ -1,5 +1,4 @@
 using Bandeira.Domain.Persons;
-using Bandeira.Domain.Bookings;
 using Bandeira.Domain.Shared;
 using Bandeira.Domain.Users;
 using Microsoft.EntityFrameworkCore;

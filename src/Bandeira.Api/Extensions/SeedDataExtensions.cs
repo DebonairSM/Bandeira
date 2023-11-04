@@ -33,7 +33,6 @@ public static class SeedDataExtensions
                 PriceCurrency = "USD",
                 ServiceFeeAmount = faker.Random.Decimal(25, 200),
                 ServiceFeeCurrency = "USD",
-                Amenities = new List<int> { (int)Amenity.Parking, (int)Amenity.MountainView },
                 LastBookedOn = DateTime.MinValue
             });
         }
