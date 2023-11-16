@@ -10,7 +10,7 @@ WORKDIR /src
 COPY ["src/Bandeira.Api/Bandeira.Api.csproj", "src/Bandeira.Api/"]
 RUN dotnet restore "src/Bandeira.Api/Bandeira.Api.csproj"
 COPY . .
-WORKDIR "/src/src/Bandeira.Api"
+WORKDIR "/src/Bandeira.Api"
 RUN dotnet build "Bandeira.Api.csproj" -c Release -o /app/build
 
 FROM build AS publish
