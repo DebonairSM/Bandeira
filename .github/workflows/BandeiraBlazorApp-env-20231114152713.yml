@@ -1,0 +1,43 @@
+on:
+  push:
+    branches:
+    - master
+env:
+  DOTNET_CORE_VERSION: 7.0.x
+  CONTAINER_APP_ENVIRONMENT_NAME: BandeiraBlazorApp-env-20231114152713
+  RESOURCE_GROUP: bandeirablazorapp-app-2023111415ResourceGroup
+  CONTAINER_REGISTRY_NAME: bandeirablazorapp20231114153331
+  CONTAINER_REGISTRY_LOGIN_SERVER: bandeirablazorapp20231114153331.azurecr.io
+jobs:
+  BuildAndDeployContainerApp:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: true
+      matrix:
+        include:
+        - appsourcepath: src/Bandeira.Api
+          containerappname: bandeira.api-container-app
+        - appsourcepath: src/BandeiraBlazorApp
+          containerappname: bandeirablazorapp-container-app
+    steps:
+    - name: Checkout source code
+      uses: actions/checkout@v4
+    - name: Setup .NET SDK
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: ${{ env.DOTNET_CORE_VERSION }}
+    - name: Azure login
+      uses: azure/login@v1
+      with:
+        creds: ${{ secrets.BandeiraBlazorApp_env_20231114152713_SPN }}
+    - name: Container App deploy
+      uses: azure/container-apps-deploy-action@v1
+      with:
+        appSourcePath: ${{ github.workspace }}/${{ matrix.appsourcepath }}
+        acrName: ${{ env.CONTAINER_REGISTRY_NAME }}
+        acrUsername: ${{ secrets.BandeiraBlazorApp20231114153331_USERNAME_7B50 }}
+        acrPassword: ${{ secrets.BandeiraBlazorApp20231114153331_PASSWORD_7B50 }}
+        imageToBuild: ${{ env.CONTAINER_REGISTRY_LOGIN_SERVER }}/${{ matrix.containerappname }}:${{ github.sha }}
+        containerAppName: ${{ matrix.containerappname }}
+        containerAppEnvironment: ${{ env.CONTAINER_APP_ENVIRONMENT_NAME }}
+        resourceGroup: ${{ env.RESOURCE_GROUP }}
