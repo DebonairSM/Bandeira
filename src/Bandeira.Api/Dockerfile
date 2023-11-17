@@ -5,12 +5,19 @@ WORKDIR /app
 EXPOSE 80
 EXPOSE 443
 
+#FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
+#WORKDIR /src
+#COPY ["src/Bandeira.Api/Bandeira.Api.csproj", "src/Bandeira.Api/"]
+#RUN dotnet restore "src/Bandeira.Api/Bandeira.Api.csproj"
+#COPY . .
+#WORKDIR "/src/src/Bandeira.Api"
+#RUN dotnet build "Bandeira.Api.csproj" -c Release -o /app/build
+
 FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
 WORKDIR /src
-COPY ["src/Bandeira.Api/Bandeira.Api.csproj", "src/Bandeira.Api/"]
-RUN dotnet restore "src/Bandeira.Api/Bandeira.Api.csproj"
+COPY ["Bandeira.Api.csproj", "./"]
+RUN dotnet restore "Bandeira.Api.csproj"
 COPY . .
-WORKDIR "/src/Bandeira.Api"
 RUN dotnet build "Bandeira.Api.csproj" -c Release -o /app/build
 
 FROM build AS publish
