@@ -1,3 +1,4 @@
+name: Docker with Blazor and Api
 on:
   push:
     branches:

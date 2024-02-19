@@ -49,7 +49,9 @@ public static class DependencyInjection
 
         services.AddDbContext<ApplicationDbContext>(options =>
         {
-            options.UseNpgsql(connectionString).UseSnakeCaseNamingConvention();
+            // TODO: once version 8 of EFCore.NamingConventions is out restore line
+            //options.UseNpgsql(connectionString).UseSnakeCaseNamingConvention();
+            options.UseNpgsql(connectionString);
         });
 
         services.AddScoped<IUserRepository, UserRepository>();

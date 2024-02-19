@@ -19,7 +19,6 @@ namespace Bandeira.Domain.Cards
             CardIssuedTo = cardIssuedTo;
         }
 
-        public CardId CardId {  get; private set; }
         public string CardNumber {  get; private set; }
         public Money CardBalance {  get; private set; }
         public Person CardIssuedTo { get; private set; }

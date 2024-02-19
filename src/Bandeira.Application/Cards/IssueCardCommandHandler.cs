@@ -30,7 +30,7 @@ internal sealed class IssueNewCardCommandHandler : ICommandHandler<IssueNewCardC
 
         await _unitOfWork.SaveChangesAsync(cancellationToken);
 
-        return newCard.CardId.Value;
+        return newCard.Id.Value;
     }
 
 }
